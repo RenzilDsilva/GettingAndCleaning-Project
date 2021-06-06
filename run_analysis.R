@@ -96,7 +96,8 @@ write.csv(combined_set1,"Tidy_set1.txt" )
 
 #Step 14 Getting second data set that achieves final 
 ##Objective#5 From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-## in this step grouping the set by Person ID and lable and then calculating Mean for variables 
+## in this step grouping the set by Person ID and lable and then 
+#calculating Mean for variables subsetting the collumns using 4:80 using across for mean
 combined_set2 <-group_by(combined_set1,personid,activity_label) %>%
   summarise(across(4:80,mean)) %>%
   print
