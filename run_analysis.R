@@ -58,18 +58,52 @@ dim(train_data_set)
 combined_set <- rbind(test_data_set,train_data_set)
 dim(combined_set)
 # 10299   563 - performing dim helps us to understand if the dataset is combined correctly.
+## This step concludes the #1 Objective: Merges the training and the test sets to create one data set.
 
 # Step 10. Updating the variables or Features using the feature 
 feature_names <- read.csv("UCI HAR Dataset/features.txt", sep="", header=FALSE)
 
 dim(feature_names)
 # 561   2 - check to see that the dimensions are correct
-# Next is to get the names of the combined set updated to the features, 
+# Next is to get the names updated to the features, 
 #but remember our first two columns are subject and activities hence we have to name these first
 names(combined_set) <- c("personid","activity",feature_names[,2]) 
 
 # validated the columns are updated
 head (combined_set,n=1)
-# Variable names looks good but did not add that validation as it will be huge.
-# now to update the 
+# Variable names looks good but 
+
+
+#Step 11 to address the #2 objective:Extracts only the measurements on the mean and standard deviation for each measurement. 
+
+combined_set1 <- combined_set [grepl("personid|activity|std|mean",names(combined_set))]
+# now to update the Activities so that we can update the IDs of activities
+#Also note I have made a different version for combined set to back up the original set in case of issues
+
+#Step 12 updating the activities 
+activities_names <- read.csv("UCI HAR Dataset/activity_labels.txt", sep="", header=FALSE)
+names(activities_names) <- c("id","activity_label") 
+# Trying to add descriptive label for next step merging
+
+combined_set1 <- merge(combined_set1,activities_names, by.x="activity",by.y="id")
+## This step concludes the #3 Objective: Uses descriptive activity names to name the activities in the data set
+##head(combined_set1, n=1)
+##dim(combined_set1)
+## 10299    82
+
+#Step 13 Now that we have a tidy data we need to write the data to a file to upload in Github
+write.csv(combined_set1,"Tidy_set1.txt" )
+
+#Step 14 Getting second data set that achieves final 
+##Objective#5 From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+## in this step grouping the set by Person ID and lable and then calculating Mean for variables 
+combined_set2 <-group_by(combined_set1,personid,activity_label) %>%
+  summarise(across(4:80,mean)) %>%
+  print
+
+dim(combined_set2)
+## 180  79
+write.csv(combined_set2,"Tidy_set2.txt" )
+
+
 
