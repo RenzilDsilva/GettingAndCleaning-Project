@@ -8,9 +8,9 @@ dim(subject_test)
 #2947    1
 
 ## Step 2. Reading the Observation file for Test
-df_tst_x1 <- read.csv("UCI HAR Dataset/test/X_test.txt", sep="", header=FALSE)
+df_tst_x <- read.csv("UCI HAR Dataset/test/X_test.txt", sep="", header=FALSE)
 
-dim(df_tst_x1)
+dim(df_tst_x)
 #2947  561
 head(df_tst_x, n=1)
 
@@ -92,7 +92,7 @@ combined_set1 <- merge(combined_set1,activities_names, by.x="activity",by.y="id"
 ## 10299    82
 
 #Step 13 Now that we have a tidy data we need to write the data to a file to upload in Github
-write.csv(combined_set1,"Tidy_set1.txt" )
+write.csv(combined_set1,"Tidy_set1.csv" )
 
 #Step 14 Getting second data set that achieves final 
 ##Objective#5 From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
@@ -104,7 +104,7 @@ combined_set2 <-group_by(combined_set1,personid,activity_label) %>%
 
 dim(combined_set2)
 ## 180  79
-write.csv(combined_set2,"Tidy_set2.txt" )
+write.csv(combined_set2,"Tidy_set2.csv" )
 
 
 
