@@ -105,6 +105,8 @@ combined_set2 <-group_by(combined_set1,personid,activity_label) %>%
 dim(combined_set2)
 ## 180  79
 write.csv(combined_set2,"Tidy_set2.csv" )
+## creating the file for submssion in assignment
+write.table(combined_set2,"Tidy_set2.txt", row.name=FALSE)
 
 
 
